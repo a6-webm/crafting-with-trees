@@ -1,0 +1,18 @@
+YUML diagram:
+[CraftTree| |+populateCraftTree();+generateItinerary(): String]
+[CraftTree]-root>[CraftNode]
+[CraftTree]-[note: generateItinerary() returns a todo list that can be crafted in order]
+
+[CraftNode]
+[CraftNode]-nodes*>[CraftNode]
+[CraftNode]-toCraft>[Slot]
+[CraftNode]-[note: nodes.length == toCraft.item.recipe.recipeArr.length]
+
+[Recipe|+yield: int]
+[Recipe]-recipeArr*>[Slot]
+
+[Slot|+amt: int]
+[Slot]-item>[Item]
+
+[<<Enum>>Item|+id: String;+name: String;+doCraft: boolean]
+[Item]-recipe>[Recipe]
