@@ -14,5 +14,5 @@ YUML diagram:
 [Slot|+amt: int]
 [Slot]-item>[Item]
 
-[<<Enum>>Item|+id: String;+name: String;+doCraft: boolean]
+[Item|+id: String;+name: String;+doCraft: boolean]
 [Item]-recipe>[Recipe]
