@@ -7,6 +7,9 @@ public class CraftNode
     {
         this.toCraft = toCraft;
         this.childNodes = new CraftNode[toCraft.getItem().getRecipe().getRecipeArr().length];
-        
+        for (Slot recipeSlot : toCraft.getItem().getRecipe().getRecipeArr())
+        {
+
+        }
     }
 }
