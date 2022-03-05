@@ -1,15 +1,21 @@
 public class Slot
 {
     private int amt;
-    private Item item;
+    private String itemID;
 
     public int getAmt()
     {
         return amt;
     }
 
-    public Item getItem()
+    public String getItemID()
     {
-        return item;
+        return itemID;
+    }
+
+    public Slot(int amt, String itemID)
+    {
+        this.amt = amt;
+        this.itemID = itemID;
     }
 }
