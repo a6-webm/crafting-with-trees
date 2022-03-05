@@ -1,10 +1,18 @@
+import java.util.HashMap;
+
 public class Item
 {
+    private static HashMap<String,Item> idToItemMap;
 
     private String id;
     private String name;
     private boolean doCraft;
     private Recipe recipe;
+
+    public static Item getItem(String id)
+    {
+        return idToItemMap.get(id);
+    }
 
     public String getId()
     {
@@ -32,5 +40,6 @@ public class Item
         this.name = name;
         this.doCraft = doCraft;
         this.recipe = recipe;
+        idToItemMap.put(id,this);
     }
 }
