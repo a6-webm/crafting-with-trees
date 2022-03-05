@@ -12,4 +12,10 @@ public class Recipe
     {
         return recipeArr;
     }
+
+    public Recipe(int yield, Slot[] recipeArr)
+    {
+        this.yield = yield;
+        this.recipeArr = recipeArr;
+    }
 }
