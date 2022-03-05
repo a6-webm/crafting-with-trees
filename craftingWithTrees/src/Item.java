@@ -1,6 +1,6 @@
 public class Item
 {
-    
+
     private String id;
     private String name;
     private boolean doCraft;
@@ -24,5 +24,13 @@ public class Item
     public Recipe getRecipe()
     {
         return recipe;
+    }
+
+    public Item(String id, String name, boolean doCraft, Recipe recipe)
+    {
+        this.id = id;
+        this.name = name;
+        this.doCraft = doCraft;
+        this.recipe = recipe;
     }
 }
