@@ -11,8 +11,7 @@ YUML diagram:
 [Recipe|+yield: int]
 [Recipe]-recipeArr*>[Slot]
 
-[Slot|+amt: int]
-[Slot]-item>[Item]
+[Slot|+amt: int;+itemID: String]
 
-[Item|+id: String;+name: String;+doCraft: boolean]
+[Item|static +idToItemMap: HashMap`String,Item`;+id: String;+name: String;+doCraft: boolean|static +getItem(id: String)]
 [Item]-recipe>[Recipe]
