@@ -7,10 +7,18 @@ import java.util.HashMap;
 
 public class Main
 {
-    HashMap<String,Recipe> recipes = new HashMap<String,Recipe>();
-    HashMap<String,Craft> totalCrafts = new HashMap<String,Craft>();
 
-    MutableValueGraph<String,Boolean> craftGraph = ValueGraphBuilder.directed().build();
+    public static void main(String[] args)
+    {
 
-    
+    }
+
+    static String makeCraftItinerary(Slot itemToBeCrafted)
+    {
+        HashMap<String,Craft> totalCrafts = new HashMap<String,Craft>();
+
+        MutableValueGraph<String,Boolean> craftGraph = ValueGraphBuilder.directed().build();
+
+        return "";
+    }
 }
