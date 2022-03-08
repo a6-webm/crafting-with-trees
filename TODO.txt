@@ -21,6 +21,8 @@ YUML diagram:
 
 we thinking a directed ValueGraph of String nodes and boolean edges, a hashmap of Strings to Recipe objects, and a hashmap of Strings to Craft objects: where each String is an itemID, each boolean is whether the craft consumes the resources, and each Craft object has info like "number required" and "number of crafts"
 
-The Network is initially populated ignoring the number of crafts required
+The ValueGraph is initially populated ignoring the number of crafts required
 Then a search for cyclic crafts (equivalent items) is made, and rectified by deleting one of the two paths from one item to the other
 Then the array of craft objects is evaluated recursively starting from the first item to craft
+
+It may seem like we're crafting with graphs, but we're almost reducing the graph to a tree after removing cyclical crafts (ngl the name is just good)
