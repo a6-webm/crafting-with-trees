@@ -6,10 +6,10 @@ public class Item
 {
     private static HashMap<String,Item> idToItemMap;
 
-    private String id;
-    private String name;
-    private boolean doCraft;
-    private Recipe recipe;
+    private final String id;
+    private final String name;
+    private final boolean doCraft;
+    private final Recipe recipe;
 
     public static Item getItem(String id)
     {
