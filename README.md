@@ -1,8 +1,5 @@
 # crafting-with-trees
-Minecraft crafting calculator made in Java
-
-
-
+Minecraft crafting calculator made in Java using Guava graphs.
 
 Calculates a minecraft step-by-step crafting process by:
 
