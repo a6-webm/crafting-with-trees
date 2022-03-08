@@ -1,9 +1,13 @@
 package main;
 
+import com.google.common.graph.GraphBuilder;
+import com.google.common.graph.MutableGraph;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.spi.ResourceBundleControlProvider;
 
 public class Main
 {
@@ -14,7 +18,7 @@ public class Main
         System.out.println(makeCraftItinerary(new Slot(1,"wooden_axe")));
     }
 
-    static void initialiseItems()
+    private static void initialiseItems()
     {
         new Item("oak_log",
                 "Oak log",
@@ -38,11 +42,27 @@ public class Main
         );
     }
 
-    static String makeCraftItinerary(Slot itemToBeCrafted)
+    private static String makeCraftItinerary(Slot itemToBeCrafted)
     {
         HashMap<String,Craft> totalCrafts = new HashMap<String,Craft>();
-        MutableValueGraph<String,Boolean> craftGraph = ValueGraphBuilder.directed().build();
+        MutableGraph<String> craftGraph = GraphBuilder.directed().build();
+
+        populateCraftGraph(itemToBeCrafted.getItemID(),craftGraph);
+
+        for (String node : craftGraph.nodes())
+            totalCrafts.put(node, new Craft());
 
         return "";
+    }
+
+    private static void populateCraftGraph(String itemID, MutableGraph<String> craftGraph)
+    {
+        Slot[] recipeArr = Item.getItem(itemID).getRecipe().getRecipeArr();
+        for (Slot slot : recipeArr)
+        {
+            String ingredientID = slot.getItemID();
+            if (!craftGraph.hasEdgeConnecting(ingredientID,itemID))
+                craftGraph.putEdge(ingredientID,itemID);
+        }
     }
 }
