@@ -15,6 +15,12 @@ public class Recipe
         return recipeArr;
     }
 
+    public Recipe()
+    {
+        this.yield = 0;
+        this.recipeArr = new Slot[0];
+    }
+
     public Recipe(int yield, Slot[] recipeArr)
     {
         this.yield = yield;
