@@ -10,8 +10,13 @@ public class Main
 
     public static void main(String[] args)
     {
+        new Item("oak_log",
+                "Oak log",
+                false,
+                new Recipe()
+        );
         new Item("wooden_plank",
-                "Wooden Plank",
+                "Wooden plank",
                 true,
                 new Recipe(4, new Slot[]{new Slot(1, "oak_log")})
         );
@@ -21,7 +26,7 @@ public class Main
                 new Recipe(4, new Slot[]{new Slot(2, "wooden_plank")})
         );
         new Item("wooden_axe",
-                "Wooden Axe",
+                "Wooden axe",
                 true,
                 new Recipe(1, new Slot[]{new Slot(3, "wooden_plank"), new Slot(2,"stick")})
         );
