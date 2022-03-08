@@ -10,6 +10,12 @@ public class Main
 
     public static void main(String[] args)
     {
+        initialiseItems();
+        System.out.println(makeCraftItinerary(new Slot(1,"wooden_axe")));
+    }
+
+    static void initialiseItems()
+    {
         new Item("oak_log",
                 "Oak log",
                 false,
