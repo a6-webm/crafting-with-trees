@@ -19,8 +19,8 @@ YUML diagram:
 
 
 
-we thinking a directed Network of String nodes and "Craft" edges, where each String is an itemID and each Craft object has info like "number required" and "number of crafts"
+we thinking a directed ValueGraph of String nodes and boolean edges, a hashmap of Strings to Recipe objects, and a hashmap of Strings to Craft objects: where each String is an itemID, each boolean is whether the craft consumes the resources, and each Craft object has info like "number required" and "number of crafts"
 
 The Network is initially populated ignoring the number of crafts required
-Then a search for cyclic crafts==equivalent items is made, and rectified by deleting one of the two path from one item to the other
-Then the Craft edges are populated recursively starting from the first item to craft
+Then a search for cyclic crafts (equivalent items) is made, and rectified by deleting one of the two paths from one item to the other
+Then the array of craft objects is evaluated recursively starting from the first item to craft
