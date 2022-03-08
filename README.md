@@ -2,6 +2,8 @@
 Minecraft crafting calculator made in Java
 
 
+
+
 Calculates a minecraft step-by-step crafting process by:
 
   Creating a graph of all relevant crafting recipes, 
