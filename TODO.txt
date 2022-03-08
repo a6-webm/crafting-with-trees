@@ -15,3 +15,12 @@ YUML diagram:
 
 [Item|static +idToItemMap: HashMap`String,Item`;+id: String;+name: String;+doCraft: boolean|static +getItem(id: String)]
 [Item]-recipe>[Recipe]
+
+
+
+
+we thinking a directed Network of String nodes and "Craft" edges, where each String is an itemID and each Craft object has info like "number required" and "number of crafts"
+
+The Network is initially populated ignoring the number of crafts required
+Then a search for cyclic crafts==equivalent items is made, and rectified by deleting one of the two path from one item to the other
+Then the Craft edges are populated recursively starting from the first item to craft
