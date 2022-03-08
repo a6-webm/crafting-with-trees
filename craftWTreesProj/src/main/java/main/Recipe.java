@@ -1,3 +1,5 @@
+package main;
+
 public class Recipe
 {
     private int yield;
