@@ -57,12 +57,18 @@ public class Main
 
     private static void populateCraftGraph(String itemID, MutableGraph<String> craftGraph)
     {
-        Slot[] recipeArr = Item.getItem(itemID).getRecipe().getRecipeArr();
-        for (Slot slot : recipeArr)
+        Item item = Item.getItem(itemID);
+        if (item.isDoCraft())
         {
-            String ingredientID = slot.getItemID();
-            if (!craftGraph.hasEdgeConnecting(ingredientID,itemID))
-                craftGraph.putEdge(ingredientID,itemID);
+            Slot[] recipeArr = item.getRecipe().getRecipeArr();
+            for (Slot slot : recipeArr)
+            {
+                String ingredientID = slot.getItemID();
+                if (!craftGraph.nodes().contains(ingredientID))
+                    populateCraftGraph(ingredientID, craftGraph);
+                if (!craftGraph.hasEdgeConnecting(ingredientID,itemID))
+                    craftGraph.putEdge(ingredientID,itemID);
+            }
         }
     }
 }
