@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Item
 {
-    private static HashMap<String,Item> idToItemMap;
+    private static HashMap<String,Item> idToItemMap = new HashMap<String,Item>();
 
     private final String id;
     private final String name;
