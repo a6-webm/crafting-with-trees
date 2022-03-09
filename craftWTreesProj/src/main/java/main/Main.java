@@ -48,9 +48,41 @@ public class Main
         for (String node : craftGraph.nodes())
             totalCrafts.put(node, new Craft());
 
-        //TODO continue from here
+        populateTotalCrafts(itemToBeCrafted, craftGraph, totalCrafts);
+
+        // TODO finish
 
         return "";
+    }
+
+    // TODO doesn't work, possibly wrong
+    private static void populateTotalCrafts(Slot itemToBeCrafted, MutableGraph<String> craftGraph, HashMap<String,Craft> totalCrafts)
+    {
+        Item item = Item.getItem(itemToBeCrafted.getItemID());
+        if (item.isDoCraft())
+        {
+            Recipe recipe = item.getRecipe();
+            Craft craft = totalCrafts.get(item.getId());
+
+            craft.numRequired += itemToBeCrafted.getAmt();
+
+            int newNumCrafts = craft.numRequired % recipe.getYield();
+            int craftDiff = newNumCrafts - craft.numOfCrafts;
+
+            if (newNumCrafts != craft.numRequired)
+            {
+                craft.numOfCrafts = newNumCrafts;
+                for (Slot recipeSlot : recipe.getRecipeArr())
+                {
+                    int amt = recipeSlot.getAmt() * craftDiff; // TODO Left off here
+                    populateTotalCrafts(new Slot(amt,recipeSlot.getItemID()), craftGraph, totalCrafts);
+                }
+            }
+        } else
+        {
+            Craft craft = totalCrafts.get(item.getId());
+            craft.numRequired += itemToBeCrafted.getAmt();
+        }
     }
 
     private static void populateCraftGraph(String itemID, MutableGraph<String> craftGraph)
