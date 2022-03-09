@@ -19,3 +19,5 @@ Then a search for cyclic crafts (equivalent items) is made, and rectified by del
 Then the array of craft objects is evaluated recursively starting from the first item to craft
 
 It may seem like we're crafting with graphs, but we're almost reducing the graph to a tree after removing cyclical crafts (ngl the name is just good)
+
+TODO in populateCraftTotal(), make sure ur parsing craftGraph and not recipes, otherwise removing cyclical recipes does nothing
