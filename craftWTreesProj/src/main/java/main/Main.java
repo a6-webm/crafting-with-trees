@@ -48,6 +48,8 @@ public class Main
         for (String node : craftGraph.nodes())
             totalCrafts.put(node, new Craft());
 
+        //TODO continue from here
+
         return "";
     }
 
