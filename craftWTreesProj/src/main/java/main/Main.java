@@ -107,15 +107,18 @@ public class Main
             for (Slot slot : recipeArr)
             {
                 String ingredientID = slot.getItemID();
-                if (!craftGraph.nodes().contains(ingredientID))
-                    populateCraftGraph(ingredientID, craftGraph);
-                if (!craftGraph.hasEdgeConnecting(itemID,ingredientID))
+                if (!ingredientID.isEmpty())
                 {
-                    craftGraph.putEdgeValue(itemID,ingredientID,slot.getAmt());
-                } else
-                {
-                    int updatedVal = slot.getAmt() + craftGraph.edgeValueOrDefault(itemID,ingredientID,0);
-                    craftGraph.putEdgeValue(itemID,ingredientID,updatedVal);
+                    if (!craftGraph.nodes().contains(ingredientID))
+                        populateCraftGraph(ingredientID, craftGraph);
+                    if (!craftGraph.hasEdgeConnecting(itemID,ingredientID))
+                    {
+                        craftGraph.putEdgeValue(itemID,ingredientID,slot.getAmt());
+                    } else
+                    {
+                        int updatedVal = slot.getAmt() + craftGraph.edgeValueOrDefault(itemID,ingredientID,0);
+                        craftGraph.putEdgeValue(itemID,ingredientID,updatedVal);
+                    }
                 }
             }
         }
