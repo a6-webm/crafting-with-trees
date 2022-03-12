@@ -54,16 +54,15 @@ public class Main
         return "";
     }
 
-    private static void populateTotalCrafts(Slot itemToBeCrafted, MutableGraph<String> craftGraph, HashMap<String,Craft> totalCrafts)
+    private static void populateTotalCrafts(int amtToCraft, String itemIDToCraft, MutableGraph<String> craftGraph, HashMap<String,Craft> totalCrafts)
     {
-        String itemID = itemToBeCrafted.getItemID();
-        Item item = Item.getItem(itemID);
-        Craft craft = totalCrafts.get(itemID);
+        Item item = Item.getItem(itemIDToCraft);
+        Craft craft = totalCrafts.get(itemIDToCraft);
         if (item.isDoCraft())
         {
             Recipe recipe = item.getRecipe();
 
-            craft.numRequired += itemToBeCrafted.getAmt();
+            craft.numRequired += amtToCraft;
 
             int newNumCrafts = craft.numRequired % recipe.getYield();
             int craftDiff = newNumCrafts - craft.numOfCrafts;
@@ -71,16 +70,16 @@ public class Main
             if (craftDiff != 0)
             {
                 craft.numOfCrafts = newNumCrafts;
-                for (String ingredItemID : craftGraph.adjacentNodes(itemID))
+                for (String ingredItemID : craftGraph.adjacentNodes(itemIDToCraft))
                 {
-                    int ingredNumRequired = craftGraph.edgeValueOrDefault(ingredItemID,itemID,0);
+                    int ingredNumRequired = craftGraph.edgeValueOrDefault(ingredItemID,itemIDToCraft,0);
                     int amt = ingredNumRequired * craftDiff;
-                    populateTotalCrafts(new Slot(amt,ingredItemID), craftGraph, totalCrafts);
+                    populateTotalCrafts(amt, ingredItemID, craftGraph, totalCrafts);
                 }
             }
         } else
         {
-            craft.numRequired += itemToBeCrafted.getAmt();
+            craft.numRequired += amtToCraft;
         }
     }
 
