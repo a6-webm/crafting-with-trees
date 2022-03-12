@@ -54,6 +54,7 @@ public class Main
         return "";
     }
 
+    // TODO function untested
     private static void populateTotalCrafts(int amtToCraft, String itemIDToCraft, MutableValueGraph<String,Integer> craftGraph, HashMap<String,Craft> totalCrafts)
     {
         Item item = Item.getItem(itemIDToCraft);
