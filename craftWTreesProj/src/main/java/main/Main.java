@@ -3,6 +3,7 @@ package main;
 import com.google.common.graph.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main
 {
@@ -49,9 +50,23 @@ public class Main
 
         populateTotalCrafts(itemToBeCrafted.getAmt(), itemToBeCrafted.getItemID(), craftGraph, totalCrafts);
 
-        // TODO finish
+        return craftItineraryStringMaker(craftGraph,totalCrafts);
+    }
 
-        return "";
+    // TODO make sure crafts are printed step by step, i.e. in some realistic order
+    private static String craftItineraryStringMaker(MutableValueGraph<String,Integer> craftGraph, HashMap<String,Craft> totalCrafts)
+    {
+        String out = "";
+        for (Map.Entry<String,Craft> entry : totalCrafts.entrySet())
+        {
+            String itemID = entry.getKey();
+            Craft craft = entry.getValue();
+            Item item = Item.getItem(itemID);
+            String itemName = item.getName();
+
+            out += itemName + ": crafts:" + craft.numOfCrafts + ", required:" + craft.numRequired + "\n";
+        }
+        return out;
     }
 
     // TODO function untested
