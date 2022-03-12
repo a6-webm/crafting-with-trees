@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Recipe
 {
+    private boolean shapeless;
     private int yield;
     private Slot[] recipeArr;
     private boolean[] consumesCraft;
@@ -27,13 +28,15 @@ public class Recipe
 
     public Recipe()
     {
+        this.shapeless = false;
         this.yield = 0;
         this.recipeArr = new Slot[0];
         this.consumesCraft = new boolean[0];
     }
 
-    public Recipe(int yield, Slot[] recipeArr)
+    public Recipe(boolean shapeless, int yield, Slot[] recipeArr)
     {
+        this.shapeless = shapeless;
         this.yield = yield;
         this.recipeArr = recipeArr;
         this.consumesCraft = new boolean[recipeArr.length];
@@ -41,15 +44,19 @@ public class Recipe
             this.consumesCraft[i] = true;
     }
 
-    public Recipe(int yield, Slot[] recipeArr, boolean[] consumesCraft)
+    public Recipe(boolean shapeless, int yield, Slot[] recipeArr, boolean[] consumesCraft)
     {
+        this.shapeless = shapeless;
         this.yield = yield;
         this.recipeArr = recipeArr;
         this.consumesCraft = consumesCraft;
     }
 
-    public Recipe(int yield, String stringRecipe) throws InvalidParameterException, NumberFormatException
+    public Recipe(boolean shapeless, int yield, String stringRecipe) throws InvalidParameterException, NumberFormatException
     {
+        this.shapeless = shapeless;
+        this.yield = yield;
+
         ArrayList<Slot> tempRecipeArr = new ArrayList<Slot>();
         ArrayList<Boolean> tempConsumesArr = new ArrayList<Boolean>();
 
