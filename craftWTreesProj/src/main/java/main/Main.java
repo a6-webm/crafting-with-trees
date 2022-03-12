@@ -40,21 +40,21 @@ public class Main
     private static String makeCraftItinerary(Slot itemToBeCrafted)
     {
         HashMap<String,Craft> totalCrafts = new HashMap<String,Craft>();
-        MutableGraph<String> craftGraph = GraphBuilder.directed().build();
+        MutableValueGraph<String,Integer> craftGraph = ValueGraphBuilder.directed().build();
 
         populateCraftGraph(itemToBeCrafted.getItemID(),craftGraph);
 
         for (String node : craftGraph.nodes())
             totalCrafts.put(node, new Craft());
 
-        populateTotalCrafts(itemToBeCrafted, craftGraph, totalCrafts);
+        populateTotalCrafts(itemToBeCrafted.getAmt(), itemToBeCrafted.getItemID(), craftGraph, totalCrafts);
 
         // TODO finish
 
         return "";
     }
 
-    private static void populateTotalCrafts(int amtToCraft, String itemIDToCraft, MutableGraph<String> craftGraph, HashMap<String,Craft> totalCrafts)
+    private static void populateTotalCrafts(int amtToCraft, String itemIDToCraft, MutableValueGraph<String,Integer> craftGraph, HashMap<String,Craft> totalCrafts)
     {
         Item item = Item.getItem(itemIDToCraft);
         Craft craft = totalCrafts.get(itemIDToCraft);
@@ -83,7 +83,7 @@ public class Main
         }
     }
 
-    private static void populateCraftGraph(String itemID, MutableGraph<String> craftGraph)
+    private static void populateCraftGraph(String itemID, MutableValueGraph<String,Integer> craftGraph)
     {
         Item item = Item.getItem(itemID);
         if (item.isDoCraft())
