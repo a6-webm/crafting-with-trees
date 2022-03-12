@@ -1,7 +1,6 @@
 package main;
 
-import com.google.common.graph.GraphBuilder;
-import com.google.common.graph.MutableGraph;
+import com.google.common.graph.*;
 
 import java.util.HashMap;
 
@@ -55,32 +54,32 @@ public class Main
         return "";
     }
 
-    // TODO doesn't work, possibly wrong
     private static void populateTotalCrafts(Slot itemToBeCrafted, MutableGraph<String> craftGraph, HashMap<String,Craft> totalCrafts)
     {
-        Item item = Item.getItem(itemToBeCrafted.getItemID());
+        String itemID = itemToBeCrafted.getItemID();
+        Item item = Item.getItem(itemID);
+        Craft craft = totalCrafts.get(itemID);
         if (item.isDoCraft())
         {
             Recipe recipe = item.getRecipe();
-            Craft craft = totalCrafts.get(item.getId());
 
             craft.numRequired += itemToBeCrafted.getAmt();
 
             int newNumCrafts = craft.numRequired % recipe.getYield();
             int craftDiff = newNumCrafts - craft.numOfCrafts;
 
-            if (newNumCrafts != craft.numRequired)
+            if (craftDiff != 0)
             {
                 craft.numOfCrafts = newNumCrafts;
-                for (Slot recipeSlot : recipe.getRecipeArr())
+                for (String ingredItemID : craftGraph.adjacentNodes(itemID))
                 {
-                    int amt = recipeSlot.getAmt() * craftDiff; // TODO Left off here
-                    populateTotalCrafts(new Slot(amt,recipeSlot.getItemID()), craftGraph, totalCrafts);
+                    int ingredNumRequired = craftGraph.edgeValueOrDefault(ingredItemID,itemID,0);
+                    int amt = ingredNumRequired * craftDiff;
+                    populateTotalCrafts(new Slot(amt,ingredItemID), craftGraph, totalCrafts);
                 }
             }
         } else
         {
-            Craft craft = totalCrafts.get(item.getId());
             craft.numRequired += itemToBeCrafted.getAmt();
         }
     }
