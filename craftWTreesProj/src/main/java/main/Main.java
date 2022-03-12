@@ -69,7 +69,6 @@ public class Main
         return out;
     }
 
-    // TODO function untested
     private static void populateTotalCrafts(int amtToCraft, String itemIDToCraft, MutableValueGraph<String,Integer> craftGraph, HashMap<String,Craft> totalCrafts)
     {
         Item item = Item.getItem(itemIDToCraft);
@@ -80,10 +79,10 @@ public class Main
 
             craft.numRequired += amtToCraft;
 
-            int newNumCrafts = craft.numRequired % recipe.getYield();
+            int newNumCrafts = (craft.numRequired - 1) / recipe.getYield() + 1;
             int craftDiff = newNumCrafts - craft.numOfCrafts;
 
-            if (craftDiff != 0)
+            if (craftDiff > 0)
             {
                 craft.numOfCrafts = newNumCrafts;
                 for (String ingredItemID : craftGraph.adjacentNodes(itemIDToCraft))
