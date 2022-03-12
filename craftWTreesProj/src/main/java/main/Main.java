@@ -24,17 +24,22 @@ public class Main
         new Item("wooden_plank",
                 "Wooden plank",
                 true,
-                new Recipe(4, new Slot[]{new Slot(1, "oak_log")})
+                new Recipe("yield 4 oak_log")
         );
         new Item("stick",
                 "Stick",
                 true,
-                new Recipe(4, new Slot[]{new Slot(2, "wooden_plank")})
+                new Recipe("yield 4 " +
+                        "wooden_plank __emptySlot __emptySlot " +
+                        "wooden_plank")
         );
         new Item("wooden_axe",
                 "Wooden axe",
                 true,
-                new Recipe(1, new Slot[]{new Slot(3, "wooden_plank"), new Slot(2,"stick")})
+                new Recipe("yield 1 " +
+                        "__emptySlot wooden_plank wooden_plank " +
+                        "__emptySlot    stick    wooden_plank " +
+                        "__emptySlot    stick    __emptySlot")
         );
     }
 
