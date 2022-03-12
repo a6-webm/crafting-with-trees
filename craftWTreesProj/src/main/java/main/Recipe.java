@@ -48,19 +48,12 @@ public class Recipe
         this.consumesCraft = consumesCraft;
     }
 
-    public Recipe(String stringRecipe) throws InvalidParameterException, NumberFormatException
+    public Recipe(int yield, String stringRecipe) throws InvalidParameterException, NumberFormatException
     {
         ArrayList<Slot> tempRecipeArr = new ArrayList<Slot>();
         ArrayList<Boolean> tempConsumesArr = new ArrayList<Boolean>();
 
         Scanner sc = new Scanner(stringRecipe);
-
-        if (!sc.hasNext() || !sc.next().equals("yield"))
-            throw new InvalidParameterException("recipe string: must start with \"yield\"");
-
-        if (!sc.hasNextInt())
-            throw new NumberFormatException("recipe string: yield int malformed");
-        this.yield = sc.nextInt();
 
         while (sc.hasNext())
         {
