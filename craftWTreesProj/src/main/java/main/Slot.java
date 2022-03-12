@@ -15,6 +15,11 @@ public class Slot
         return itemID;
     }
 
+    public Slot() {
+        this.amt = 0;
+        this.itemID = "";
+    }
+
     public Slot(int amt, String itemID)
     {
         this.amt = amt;
