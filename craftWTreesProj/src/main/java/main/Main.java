@@ -88,7 +88,7 @@ public class Main
                 craft.numOfCrafts = newNumCrafts;
                 for (String ingredItemID : craftGraph.adjacentNodes(itemIDToCraft))
                 {
-                    int ingredNumRequired = craftGraph.edgeValueOrDefault(ingredItemID,itemIDToCraft,0);
+                    int ingredNumRequired = craftGraph.edgeValueOrDefault(itemIDToCraft,ingredItemID,0);
                     int amt = ingredNumRequired * craftDiff;
                     populateTotalCrafts(amt, ingredItemID, craftGraph, totalCrafts);
                 }
@@ -110,13 +110,13 @@ public class Main
                 String ingredientID = slot.getItemID();
                 if (!craftGraph.nodes().contains(ingredientID))
                     populateCraftGraph(ingredientID, craftGraph);
-                if (!craftGraph.hasEdgeConnecting(ingredientID,itemID))
+                if (!craftGraph.hasEdgeConnecting(itemID,ingredientID))
                 {
-                    craftGraph.putEdgeValue(ingredientID,itemID,slot.getAmt());
+                    craftGraph.putEdgeValue(itemID,ingredientID,slot.getAmt());
                 } else
                 {
-                    int updatedVal = slot.getAmt() + craftGraph.edgeValueOrDefault(ingredientID,itemID,0);
-                    craftGraph.putEdgeValue(ingredientID,itemID,updatedVal);
+                    int updatedVal = slot.getAmt() + craftGraph.edgeValueOrDefault(itemID,ingredientID,0);
+                    craftGraph.putEdgeValue(itemID,ingredientID,updatedVal);
                 }
             }
         }
