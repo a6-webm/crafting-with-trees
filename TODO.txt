@@ -27,4 +27,4 @@ So we make a Craft graph
 then what?
 we saying that the number in Slot represents the number required, not the number of crafts required
 
-TODO make sure ur graph direction reversal worked
+TODO have getItem() throw an error if u ask for an item that doesn't exist
