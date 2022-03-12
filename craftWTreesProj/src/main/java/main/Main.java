@@ -95,7 +95,13 @@ public class Main
                 if (!craftGraph.nodes().contains(ingredientID))
                     populateCraftGraph(ingredientID, craftGraph);
                 if (!craftGraph.hasEdgeConnecting(ingredientID,itemID))
-                    craftGraph.putEdge(ingredientID,itemID);
+                {
+                    craftGraph.putEdgeValue(ingredientID,itemID,slot.getAmt());
+                } else
+                {
+                    int updatedVal = slot.getAmt() + craftGraph.edgeValueOrDefault(ingredientID,itemID,0);
+                    craftGraph.putEdgeValue(ingredientID,itemID,updatedVal);
+                }
             }
         }
     }
