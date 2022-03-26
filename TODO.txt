@@ -1,3 +1,7 @@
+Should add an ArrayList<String> craftOrder to populateCraftTotal() that is used to make the step by step list
+
+
+
 YUML diagram:
 [Item|static +idToItemMap: HashMap`String,Item`;+id: String;+name: String;+doCraft: boolean|static +getItem(id: String): Item]
 [Item]-recipe>[Recipe]
