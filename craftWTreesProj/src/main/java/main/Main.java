@@ -62,21 +62,20 @@ public class Main {
         return craftItineraryStringMaker(craftGraph,totalCrafts, craftOrder);
     }
 
-    // TODO make sure crafts are printed step by step, i.e. in some realistic order
     private static String craftItineraryStringMaker(MutableValueGraph<String,Integer> craftGraph, HashMap<String,Craft> totalCrafts, ArrayList<String> craftOrder) {
         String out = "";
-        for (Map.Entry<String,Craft> entry : totalCrafts.entrySet()) {
-            String itemID = entry.getKey();
-            Craft craft = entry.getValue();
+        int stepIt = craftOrder.size();
+        for (String itemID : craftOrder) {
+            Craft craft = totalCrafts.get(itemID);
             Item item = Item.getItem(itemID);
             String itemName = item.getName();
 
-            out += itemName + ": crafts:" + craft.numOfCrafts + ", required:" + craft.numRequired + "\n";
+            out += "|Step " + stepIt + "| " + itemName + ": crafts:" + craft.numOfCrafts + "\n";
+            stepIt--;
         }
         return out;
     }
-
-    //TODO implement craftOrder
+    
     private static void populateTotalCrafts(
             int amtToCraft, String itemIDToCraft,
             MutableValueGraph<String,
@@ -88,6 +87,9 @@ public class Main {
         Item item = Item.getItem(itemIDToCraft);
         Craft craft = totalCrafts.get(itemIDToCraft);
         if (item.isDoCraft()) {
+            craftOrder.remove(itemIDToCraft);
+            craftOrder.add(itemIDToCraft);
+
             Recipe recipe = item.getRecipe();
 
             craft.numRequired += amtToCraft;
@@ -98,9 +100,11 @@ public class Main {
             if (craftDiff > 0) {
                 craft.numOfCrafts = newNumCrafts;
                 for (String ingredItemID : craftGraph.adjacentNodes(itemIDToCraft)) {
-                    int ingredNumRequired = craftGraph.edgeValueOrDefault(itemIDToCraft,ingredItemID,0);
-                    int amt = ingredNumRequired * craftDiff;
-                    populateTotalCrafts(amt, ingredItemID, craftGraph, totalCrafts, craftOrder);
+                    if (craftGraph.hasEdgeConnecting(itemIDToCraft,ingredItemID)) {
+                        int ingredNumRequired = craftGraph.edgeValueOrDefault(itemIDToCraft, ingredItemID, 0);
+                        int amt = ingredNumRequired * craftDiff;
+                        populateTotalCrafts(amt, ingredItemID, craftGraph, totalCrafts, craftOrder);
+                    }
                 }
             }
         } else {
