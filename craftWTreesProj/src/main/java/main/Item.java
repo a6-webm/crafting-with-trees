@@ -1,5 +1,6 @@
 package main;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 public class Item
@@ -11,8 +12,10 @@ public class Item
     private final boolean doCraft;
     private final Recipe recipe;
 
-    public static Item getItem(String id)
+    public static Item getItem(String id) throws InvalidParameterException
     {
+        if (!idToItemMap.containsKey(id))
+            throw new InvalidParameterException("item: " + id + " does not exist");
         return idToItemMap.get(id);
     }
 
