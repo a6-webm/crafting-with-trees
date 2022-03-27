@@ -3,3 +3,5 @@ It may seem like we're crafting with graphs, but we're almost reducing the graph
 TODO implement removal of cyclical recipes
 
 TODO have getItem() throw an error if u ask for an item that doesn't exist
+
+TODO implement getting Items from a file or straight from a minecraft instance (which may involve implementing a console interface for picking the preferred recipe)
