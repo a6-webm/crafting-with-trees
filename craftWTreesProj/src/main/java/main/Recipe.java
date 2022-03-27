@@ -1,8 +1,7 @@
 package main;
 
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.security.*;
+import java.util.*;
 
 public class Recipe
 {
