@@ -8,20 +8,36 @@ public class CraftingProcess {
     MutableValueGraph<String,Integer> craftGraph;
     ArrayList<String> craftOrder;
 
-    public CraftingProcess(Slot itemToBeCrafted) {
+    public CraftingProcess(Slot... slots) {
         this.totalCrafts = new HashMap<>();
         this.craftGraph = ValueGraphBuilder.directed().build();
         this.craftOrder = new ArrayList<>();
 
-        populateCraftGraph(itemToBeCrafted.getItemID());
+        populateCraftGraph(slots);
 
         for (String node : craftGraph.nodes())
             totalCrafts.put(node, new Craft());
 
-        populateTotalCrafts(itemToBeCrafted.getAmt(), itemToBeCrafted.getItemID());
+        populateTotalCrafts();
     }
 
-    private void populateCraftGraph(String itemID) {
+    private void populateCraftGraph(Slot[] slots) {
+        for (Slot slot : slots) {
+            String ingredientID = slot.getItemID();
+            if (!ingredientID.isEmpty()) {
+                if (!craftGraph.nodes().contains(ingredientID))
+                    populateCraftGraphRecurse(ingredientID);
+                if (!craftGraph.hasEdgeConnecting("",ingredientID)) {
+                    craftGraph.putEdgeValue("",ingredientID,slot.getAmt());
+                } else {
+                    int updatedVal = slot.getAmt() + craftGraph.edgeValueOrDefault("",ingredientID,0);
+                    craftGraph.putEdgeValue("",ingredientID,updatedVal);
+                }
+            }
+        }
+    }
+
+    private void populateCraftGraphRecurse(String itemID) {
         Item item = Item.getItem(itemID);
         if (item.isDoCraft()) {
             Slot[] recipeArr = item.getRecipe().getRecipeArr();
@@ -29,7 +45,7 @@ public class CraftingProcess {
                 String ingredientID = slot.getItemID();
                 if (!ingredientID.isEmpty()) {
                     if (!craftGraph.nodes().contains(ingredientID))
-                        populateCraftGraph(ingredientID);
+                        populateCraftGraphRecurse(ingredientID);
                     if (!craftGraph.hasEdgeConnecting(itemID,ingredientID)) {
                         craftGraph.putEdgeValue(itemID,ingredientID,slot.getAmt());
                     } else {
@@ -41,7 +57,14 @@ public class CraftingProcess {
         }
     }
 
-    private void populateTotalCrafts(int amtToCraft, String itemIDToCraft) {
+    private void populateTotalCrafts() {
+        for (String ingredItemID : craftGraph.adjacentNodes("")) {
+            int ingredNumRequired = craftGraph.edgeValueOrDefault("", ingredItemID, 0);
+            populateTotalCraftsRecurse(ingredNumRequired, ingredItemID);
+        }
+    }
+
+    private void populateTotalCraftsRecurse(int amtToCraft, String itemIDToCraft) {
         Item item = Item.getItem(itemIDToCraft);
         Craft craft = totalCrafts.get(itemIDToCraft);
         if (item.isDoCraft()) {
@@ -61,7 +84,7 @@ public class CraftingProcess {
                     if (craftGraph.hasEdgeConnecting(itemIDToCraft,ingredItemID)) {
                         int ingredNumRequired = craftGraph.edgeValueOrDefault(itemIDToCraft, ingredItemID, 0);
                         int amt = ingredNumRequired * craftDiff;
-                        populateTotalCrafts(amt, ingredItemID);
+                        populateTotalCraftsRecurse(amt, ingredItemID);
                     }
                 }
             }
@@ -72,7 +95,7 @@ public class CraftingProcess {
 
     @Override
     public String toString() {
-        String out = "";
+        String out = "Crafts: \n";
         int stepIt = craftOrder.size();
         for (String itemID : craftOrder) {
             Craft craft = totalCrafts.get(itemID);
@@ -81,6 +104,18 @@ public class CraftingProcess {
 
             out += "|Step " + stepIt + "| " + itemName + ": crafts:" + craft.numOfCrafts + "\n";
             stepIt--;
+        }
+
+        out += "\nResources: \n";
+        for (Map.Entry<String,Craft> entry : totalCrafts.entrySet()) {
+            String itemID = entry.getKey();
+            if (!itemID.equals("")) {
+                Item item = Item.getItem(itemID);
+                Craft craft = entry.getValue();
+
+                if (!item.isDoCraft())
+                    out += itemID + ": " + craft.numRequired + "\n";
+            }
         }
         return out;
     }
