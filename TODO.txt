@@ -4,6 +4,8 @@ TODO implement removal of cyclical recipes
 
 TODO implement getting Items from a file or straight from a minecraft instance (which may involve implementing a console interface for picking the preferred recipe)
 
-TODO implement items that don't get used up in crafting
+TODO implement items that don't get used up in crafting (have to add this to the craft graph somehow)
 
-TODO implement starting with resources
+TODO implement starting with resources (ez way is start Craft objects with negative values)
+
+TODO this might throw everything into chaos, but think about recipes with multiple byproducts: e.g. a recipe that uses a bucket of lava will probably return the bucket
